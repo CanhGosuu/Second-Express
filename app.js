@@ -9,7 +9,7 @@ require("dotenv").config();
 //router setup
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-
+var catalogRouter = require("./routes/catalog");
 var app = express();
 
 // view engine setup
@@ -23,8 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 //Set up mongoose connection
 var mongoose = require("mongoose");
-var mongoDB =
-  "mongodb://tacaocanh:canh981022@ds041157.mlab.com:41157/express-first";
+var mongoDB = process.env.MONGO_CONNECT;
 mongoose.connect(
   mongoDB,
   { useNewUrlParser: true }
@@ -32,9 +31,12 @@ mongoose.connect(
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
+db.once("open", function() {
+  console.log("we are connected!");
+});
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/catalog", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

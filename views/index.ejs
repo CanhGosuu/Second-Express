@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<html lang="en">
+
+<head>
+  <% include ./layouts/head %>
+</head>
+
+<body class="container">
+  <!-- header -->
+  <% include ./layouts/header %>
+  <!-- main -->
+  <h1>
+    <%=locals.title%>
+  </h1>
+  <p>Welcome to <em>LocalLibrary</em>, a very basic Express website developed as a tutorial example on the Mozilla
+    Developer Network.
+  </p>
+  <h1>Dynamic content</h1>
+  <%if(locals.error){ %>
+  <p>Error getting dynamic content.</p>
+  <% } else{ %>
+  <p>The library has the following record conts:</p>
+  <% } %>
+  <ul>
+    <li><strong>Book: </strong>
+      <%=locals.data.book_count?locals.data.book_count:""%>
+    </li>
+    <li><strong>Copies: </strong>
+      <%=locals.data.book_instance_count?locals.data.book_instance_count:""%>
+    </li>
+    <li><strong>Copies available: </strong>
+      <%=locals.data.book_instance_available_count?locals.data.book_instance_available_count:""%>
+    </li>
+    <li><strong>Authors: </strong>
+      <%=locals.data.author_count?locals.data.author_count:""%>
+    </li>
+    <li><strong>Genres: </strong>
+      <%=locals.data.genre_count?locals.data.genre_count:""%>
+    </li>
+  </ul>
+
+
+  <!-- main -->
+  </div>
+  </div>
+  </div>
+  <footer>
+    <% include ./layouts/footer %>
+  </footer>
+
+</body>
