@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <ul>
+        <%if(locals.book_list){ %>
+        <% for(var i=0; i<book_list.length; i++) {%>
+        <li> <a href="<%=book_list[i].url%>">
+                <%=book_list[i].title%></a>
+            <%=book_list[i].author.name%>
+        </li>
+        <% }} else{ %>
+        <li>There are no books</li>
+        <% } %>
+    </ul>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../layouts/footer %>
+    </footer>
+
+</body>

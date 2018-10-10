@@ -14,13 +14,13 @@ var AuthorSchema = new Schema({
   date_of_birth: { type: Date },
   date_of_death: { type: Date }
 });
-AuthorSchema.virtual("name").get(() => {
-  this.first_name + " " + this.family_name;
+AuthorSchema.virtual("name").get(function() {
+  return this.first_name + this.family_name;
 });
-AuthorSchema.virtual("lifespan").get(() => {
-  this.date_of_death.getYear() - this.date_of_birth.getYear();
+AuthorSchema.virtual("lifespan").get(function() {
+  return this.date_of_death.getYear() - this.date_of_birth.getYear();
 });
-AuthorSchema.virtual("url").get(() => {
-  "/catalog/author/" + this._id;
+AuthorSchema.virtual("url").get(function() {
+  return "/catalog/author/" + this._id;
 });
 module.exports = mongoose.model("Author", AuthorSchema);
