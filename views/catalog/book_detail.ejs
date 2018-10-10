@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../layouts/header %>
+    <!-- main -->
+    <h1>Title:
+        <%=book.title%>
+    </h1>
+    <p><strong>Author:</strong> <a href="<%=book.author.url%>">
+            <%=book.author.name%></a></p>
+    <p><strong>Summary: </strong>
+        <%=book.summary%>
+    </p>
+    <p><strong>ISBN: </strong>
+        <%=book.isbn%>
+    </p>
+    <p><strong>Genre: </strong>&nbsp
+        <% for(var i=0; i<book.genre.length; i++) {%>
+        <a href="<%=book.genre[i].url%>">
+            <%=book.genre[i].name%>
+        </a>
+        <%if(i<book.genre.length-1){ %>
+        ,
+        <% } %>
+        <% } %>
+    </p>
+
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Copies</h4>
+
+        <%if(locals.book_instances){ %>
+        <% for(var i=0; i<book_instances.length; i++) {%>
+        <hr>
+        <%if(book_instances[i].status=="Available"){ %>
+        <p class="text-success">
+            <%=book_instances[i].status%>
+        </p>
+        <% } else if(book_instances[i].status=="Maintenance"){ %>
+        <p class="text-danger">
+            <%=book_instances[i].status%>
+        </p>
+        <% } else{ %>
+        <p class="text-warning">
+            <%=book_instances[i].status%>
+        </p>
+        <% } %>
+        <p><strong>Imprint: </strong>
+            <%=book_instances[i].imprint%>
+        </p>
+        <%if(book_instances[i].status!="Available"){ %>
+        <p><strong>Due back: </strong>
+            <%=book_instances[i].due_back_formatted%>
+        </p>
+        <% } %>
+        <p><strong>Id:</strong>&nbsp
+            <a href="<%=book_instances[i].url%>">
+                <%=book_instances[i]._id%></a>
+        </p>
+        <% }} else{ %>
+        <p>There are no copies of this book in the library.</p>
+        <% } %>
+
+
+    </div>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../layouts/footer %>
+    </footer>
+
+</body>

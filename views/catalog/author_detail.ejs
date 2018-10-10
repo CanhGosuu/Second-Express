@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../layouts/header %>
+    <!-- main -->
+    <h1>
+        Author:
+        <%=author.name%>
+    </h1>
+    <p><strong>(
+            <%=author.date_of_birth_formatted%> -
+            <%=author.date_of_death_formatted%>)
+        </strong>
+    </p>
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Books</h4>
+        <dl>
+            <%if(author_books){ %>
+            <% for(var i=0; i<author_books.length; i++) {%>
+            <dt> <a href="<%=author_books[i].url%>">
+                    <%=author_books[i].title%>
+                </a>
+            </dt>
+            <dd>
+                <%=author_books[i].summary%>
+            </dd>
+            <% }} else{ %>
+            <p>This author has no books.</p>
+            <% } %>
+
+        </dl>
+    </div>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../layouts/footer %>
+    </footer>
+
+</body>

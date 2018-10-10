@@ -19,10 +19,10 @@ AuthorSchema.virtual("name").get(function() {
   return this.first_name + " " + this.family_name;
 });
 AuthorSchema.virtual("date_of_birth_formatted").get(function() {
-  return moment(this.date_of_birth).format("DD MMMM,YYYY");
+  return moment(this.date_of_birth).format("MMMM DD,YYYY");
 });
 AuthorSchema.virtual("date_of_death_formatted").get(function() {
-  return moment(this.date_of_death).format("DD MMMM,YYYY");
+  return moment(this.date_of_death).format("MMMM DD,YYYY");
 });
 AuthorSchema.virtual("lifespan").get(function() {
   return this.date_of_death.getYear() - this.date_of_birth.getYear();
