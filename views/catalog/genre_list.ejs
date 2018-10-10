@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <ul>
+        <%if(locals.genre_list){ %>
+        <% for(var i=0; i<genre_list.length; i++) {%>
+        <li> <a href="<%=genre_list[i].url%>">
+                <%=genre_list[i].name%></a>
+        </li>
+        <% }} else{ %>
+        <li>There are no genre.</li>
+        <% } %>
+    </ul>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../layouts/footer %>
+    </footer>
+
+</body>
