@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="book">Book: </label>
+            <select class="form-control" name="book" required>
+                <%for(var i=0;i<book_list.length;i++){ %>
+                <%if(locals.bookinstance){ %>
+                <option value="<%=book_list[i]._id%>" <%=locals.bookinstance.book.toString()==book_list[i]._id.toString()
+                    ? selected : "" %>>
+                    <%=book_list[i].title %>
+                </option>
+                <% } else{ %>
+                <option value="<%=book_list[i]._id%>">
+                    <%=book_list[i].title %>
+                </option>
+                <% } %>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="imprint">Imprint: </label>
+            <input type="text" class="form-control" name="imprint" placeholder="Publisher and date information" value="<%=undefined===locals.bookinstance ?'': bookinstance.imprint%>"
+                required>
+        </div>
+        <div class="row">
+
+            <div class="form-group col-5">
+                <label for="due_back">Date when book available: </label>
+                <input type="date" class="form-control" name="due_back" required value="<%=undefined===locals.bookinstance ?'': bookinstance.due_back%>">
+            </div>
+            <div class="form-group col-6">
+                <label for="status">Status: </label>
+                <select class="form-control" name="status" required>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Available">Available</option>
+                    <option value="Loaned">Loaned</option>
+                    <option value="Reserved">Reserved</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <% if (locals.errors) { %>
+    <ul>
+        <% for(var i=0;i<locals.errors.length;i++){ %>
+        <li>
+            <%=locals.errors[i].msg%>
+        </li>
+        <% } %>
+    </ul>
+    <% } %>
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../../layouts/footer %>
+    </footer>
+
+</body>
