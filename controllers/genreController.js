@@ -1,3 +1,6 @@
+const { body, validationResult } = require("express-validator/check");
+const { sanitizeBody } = require("express-validator/filter");
+
 var Genre = require("../models/genre");
 var Book = require("../models/book");
 var async = require("async");
@@ -11,7 +14,7 @@ exports.genre_list = function(req, res) {
         return next(err);
       }
       //Successful, so render
-      res.render("catalog/genre_list", {
+      res.render("catalog/lists/genre_list", {
         title: "Gener Lists",
         genre_list: list_genre
       });
@@ -40,7 +43,7 @@ exports.genre_detail = function(req, res) {
         return next(err);
       }
       //Sucessful so render
-      res.render("catalog/genre_detail", {
+      res.render("catalog/details/genre_detail", {
         title: "Gener Detail",
         genre: results.genre,
         genre_books: results.genre_books
@@ -51,13 +54,62 @@ exports.genre_detail = function(req, res) {
 
 // Display Genre create form on GET.
 exports.genre_create_get = function(req, res) {
-  res.send("NOT IMPLEMENTED: Genre create GET");
+  // res.send("NOT IMPLEMENTED: Genre create GET");
+  res.render("catalog/forms/genre_form", { title: "Create Genre" });
 };
 
 // Handle Genre create on POST.
-exports.genre_create_post = function(req, res) {
-  res.send("NOT IMPLEMENTED: Genre create POST");
-};
+exports.genre_create_post = [
+  // Validate that the name field is not empty.
+  body("name", "Genre name required")
+    .isLength({ min: 1 })
+    .trim(),
+
+  // Sanitize (trim and escape) the name field.
+  sanitizeBody("name")
+    .trim()
+    .escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a genre object with escaped and trimmed data.
+    var genre = new Genre({ name: req.body.name });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values/error messages.
+      res.render("catalog/forms/genre_form", {
+        title: "Create Genre",
+        genre: genre,
+        errors: errors.array()
+      });
+      return;
+    } else {
+      // Data from form is valid.
+      // Check if Genre with same name already exists.
+      Genre.findOne({ name: req.body.name }).exec(function(err, found_genre) {
+        if (err) {
+          return next(err);
+        }
+
+        if (found_genre) {
+          // Genre exists, redirect to its detail page.
+          res.redirect(found_genre.url);
+        } else {
+          genre.save(function(err) {
+            if (err) {
+              return next(err);
+            }
+            // Genre saved. Redirect to genre detail page.
+            res.redirect(genre.url);
+          });
+        }
+      });
+    }
+  }
+];
 
 // Display Genre delete form on GET.
 exports.genre_delete_get = function(req, res) {

@@ -1,3 +1,5 @@
+const { body, validationResult } = require("express-validator/check");
+const { sanitizeBody } = require("express-validator/filter");
 var Author = require("../models/author");
 var async = require("async");
 var Book = require("../models/book");
@@ -11,7 +13,7 @@ module.exports = {
         if (err) {
           return next(err);
         }
-        res.render("catalog/author_list", {
+        res.render("catalog/lists/author_list", {
           title: "Author List",
           author_list: list_author
         });
@@ -39,7 +41,7 @@ module.exports = {
           return next(err);
         }
         // Successful, so render.
-        res.render("catalog/author_detail", {
+        res.render("catalog/details/author_detail", {
           title: "Author Detail",
           author: results.author,
           author_books: results.authors_books
@@ -49,12 +51,66 @@ module.exports = {
   },
   //display create form on GET
   author_create_get: (req, res) => {
-    res.send("NOT INPLEMENTED: Author create GET");
+    // res.send("NOT INPLEMENTED: Author create GET");
+    res.render("catalog/forms/author_form", { title: "Create Author" });
   },
   // Handle Author create on POST
-  author_create_post: (req, res) => {
-    res.send("NOT INPLEMENTED: Author create POST");
-  },
+  author_create_post: [
+    // Validate fields
+    body("first_name")
+      .isLength({ min: 1 })
+      .trim()
+      .withMessage("First name must be specified."),
+    // .isAlphanumeric()
+    // .withMessage("First name has non-alphanumeric characters."),
+    body("family_name")
+      .isLength({ min: 1 })
+      .trim()
+      .withMessage("Family name must be specified.")
+      .isAlphanumeric()
+      .withMessage("Family name has non-alphanumeric characters."),
+    body("date_of_birth", "Invalid date of birth")
+      .optional({ checkFalsy: true })
+      .isISO8601(),
+    body("date_of_death", "Invalid date of death")
+      .optional({ checkFalsy: true })
+      .isISO8601(),
+    // Sanitize fields.
+    sanitizeBody("first_name")
+      .trim()
+      .escape(),
+    sanitizeBody("family_name")
+      .trim()
+      .escape(),
+    sanitizeBody("date_of_birth").toDate(),
+    sanitizeBody("date_of_death").toDate(),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.render("catalog/forms/author_form", {
+          title: "Create Author",
+          author: req.body,
+          errors: errors.array()
+        });
+        return;
+      } else {
+        //Data from form is valid
+        //Create an Author
+        var author = new Author({
+          first_name: req.body.first_name,
+          family_name: req.body.family_name,
+          date_of_birth: req.body.date_of_birth,
+          date_of_death: req.body.date_of_death
+        });
+        author.save(function(err) {
+          if (err) {
+            return next(err);
+          }
+          res.redirect(author.url);
+        });
+      }
+    }
+  ],
   //display delete form on GET
   author_delete_get: (req, res) => {
     res.send("NOT INPLEMENTED: Author delete GET");

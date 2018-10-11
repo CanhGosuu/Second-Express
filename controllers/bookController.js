@@ -40,7 +40,7 @@ exports.book_list = function(req, res, next) {
         return next(err);
       }
       // successful, so render
-      res.render("catalog/book_list", {
+      res.render("catalog/lists/book_list", {
         title: "Book List",
         book_list: list_book
       });
@@ -71,7 +71,7 @@ exports.book_detail = function(req, res, next) {
         err.status = 404;
         return next(err);
       }
-      res.render("catalog/book_detail", {
+      res.render("catalog/details/book_detail", {
         title: "Book Detail",
         book: results.book,
         book_instances: results.book_instance

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="name">Genre:</label>
+            <input type="text" class="form-control" name="name" placeholder="Name..." value="<%=locals.genre?genre.name:""%>">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <% if (locals.errors) { %>
+    <ul>
+        <% for(var i=0;i<locals.errors.length;i++){ %>
+        <li>
+            <%=locals.errors[i].msg%>
+        </li>
+        <% } %>
+    </ul>
+    <% } %>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../../layouts/footer %>
+    </footer>
+
+</body>

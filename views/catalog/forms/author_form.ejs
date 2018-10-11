@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="first_name">First name:</label>
+            <input type="text" class="form-control" name="first_name" placeholder="First Name..." required value="<%=locals.author?author.first_name:""%>">
+        </div>
+        <div class="form-group">
+            <label for="family_name">Last name:</label>
+            <input type="text" class="form-control" name="family_name" placeholder="First Name..." required value="<%=locals.author?author.family_name:""%>">
+        </div>
+        <div class="form-group">
+            <label for="date_of_birth">Date of birth:</label>
+            <input type="date" class="form-control" name="date_of_birth" value="<%=locals.author?author.date_of_birth:""%>">
+        </div>
+        <div class="form-group">
+            <label for="date_of_death">Date of death:</label>
+            <input type="date" class="form-control" name="date_of_death" value="<%=locals.author?author.date_of_death:""%>">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <% if (locals.errors) { %>
+    <ul>
+        <% for(var i=0;i<locals.errors.length;i++){ %>
+        <li>
+            <%=locals.errors[i].msg%>
+        </li>
+        <% } %>
+    </ul>
+    <% } %>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../../layouts/footer %>
+    </footer>
+
+</body>

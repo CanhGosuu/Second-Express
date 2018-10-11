@@ -10,7 +10,7 @@ exports.bookinstance_list = function(req, res) {
         return next(err);
       }
       //Successful, so render
-      res.render("catalog/bookinstance_list", {
+      res.render("catalog/lists/bookinstance_list", {
         title: "Book Instance Lists",
         bookinstance_list: list_bookinstance
       });
@@ -33,7 +33,7 @@ exports.bookinstance_detail = function(req, res) {
         return next(err);
       }
       // Successful, so render.
-      res.render("catalog/bookinstance_detail", {
+      res.render("catalog/details/bookinstance_detail", {
         title: "Book:",
         bookinstance: bookinstance
       });
