@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" name="title" placeholder="Name of book" required value="<%=locals.book?book.title:""%>">
+        </div>
+        <div class="form-group">
+            <label for="author">Author: </label>
+            <select class="form-control" name="author" required>
+                <%for(var i=0;i<authors.length;i++){ %>
+                <%if(locals.book){ %>
+                <option value="<%=authors[i]._id%>" <%=authors[i]._id.toString()==locals.book.author ? selected : "" %>>
+                    <%=authors[i].name %>
+                </option>
+                <% } else{ %>
+                <option value="<%=authors[i]._id%>">
+                    <%=authors[i].name %>
+                </option>
+                <% } %>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="summary">Summary:</label>
+            <textarea name="summary" class="form-control" value="<%=undefined===locals.book?'': book.summary%>"
+                required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input type="text" class="form-control" name="isbn" placeholder="ISBN13..." value="<%=undefined===locals.book?'': book.isbn%>"
+                required>
+        </div>
+        <div class="form-group">
+            <label>Genre: </label><br><br>
+            <%for(var i=0;i<genres.length;i++){ %>
+            <div style="display: inline; padding-right:10px;">
+                <input type="checkbox" class="checkbox-inline" name="genre" id="<%=genres[i]._id%>" value="<%=genres[i]._id%>"
+                    <%=genres[i].checked=="true" ? checked : "" %>
+                class="checkbox-input">
+                <label for="" <%=genres[i]._id%>"">"
+                    <%=genres[i].name%>"</label>
+            </div>
+            <% } %>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <% if (locals.errors) { %>
+    <ul>
+        <% for(var i=0;i<locals.errors.length;i++){ %>
+        <li>
+            <%=locals.errors[i].msg%>
+        </li>
+        <% } %>
+    </ul>
+    <% } %>
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../../layouts/footer %>
+    </footer>
+
+</body>
