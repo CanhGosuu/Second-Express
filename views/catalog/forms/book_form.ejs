@@ -22,7 +22,8 @@
             <select class="form-control" name="author" required>
                 <%for(var i=0;i<authors.length;i++){ %>
                 <%if(locals.book){ %>
-                <option value="<%=authors[i]._id%>" <%=authors[i]._id.toString()==locals.book.author ? selected : "" %>>
+                <option value="<%=authors[i]._id%>" <%=authors[i]._id.toString()==locals.book.author||authors[i]._id.toString()==locals.book.author
+                    ? selected : "" %>>
                     <%=authors[i].name %>
                 </option>
                 <% } else{ %>
@@ -48,7 +49,7 @@
             <%for(var i=0;i<genres.length;i++){ %>
             <div style="display: inline; padding-right:10px;">
                 <input type="checkbox" class="checkbox-inline" name="genre" id="<%=genres[i]._id%>" value="<%=genres[i]._id%>"
-                    <%=genres[i].checked=="true" ? checked : "" %>
+                    <%=genres[i].checked=="true" ? "checked" : "" %>
                 class="checkbox-input">
                 <label for="" <%=genres[i]._id%>"">"
                     <%=genres[i].name%>"</label>
