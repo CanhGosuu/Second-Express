@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../../layouts/head %>
+</head>
+
+<body class="container">
+    <!-- header -->
+    <% include ../../layouts/header %>
+    <!-- main -->
+    <h1>
+        <%=title%>
+    </h1>
+    <h3>
+        <%=bookinstance.book.title%>
+    </h3>
+    <p>ID:<strong>
+            <%=bookinstance._id%></strong></p>
+    <br><br>
+    <p>Do you really want to delete this Bookinstance?</p>
+
+    <form action="" method="post">
+        <div class="form-group">
+            <input type="text" hidden required name="bookinstanceid" value="<%=bookinstance._id%>" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
+
+
+    <!-- main -->
+    </div>
+    </div>
+    </div>
+    <footer>
+        <% include ../../layouts/footer %>
+    </footer>
+
+</body>

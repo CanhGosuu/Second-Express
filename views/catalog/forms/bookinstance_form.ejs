@@ -18,8 +18,7 @@
             <select class="form-control" name="book" required>
                 <%for(var i=0;i<book_list.length;i++){ %>
                 <%if(locals.bookinstance){ %>
-                <option value="<%=book_list[i]._id%>" <%=locals.bookinstance.book.toString()==book_list[i]._id.toString()
-                    ? selected : "" %>>
+                <option value="<%=book_list[i]._id%>" <%=selected_book==book_list[i]._id.toString() ? "selected" : "" %>>
                     <%=book_list[i].title %>
                 </option>
                 <% } else{ %>
@@ -44,10 +43,14 @@
             <div class="form-group col-6">
                 <label for="status">Status: </label>
                 <select class="form-control" name="status" required>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Available">Available</option>
-                    <option value="Loaned">Loaned</option>
-                    <option value="Reserved">Reserved</option>
+                    <option value="Maintenance" <%=undefined===locals.bookinstance||locals.bookinstance.status!="Maintenance"
+                        ? "selected" : "" %>>Maintenance</option>
+                    <option value="Available" <%=undefined===locals.bookinstance||locals.bookinstance.status!="Available"
+                        ? "selected" : "" %>>Available</option>
+                    <option value="Loaned" <%=undefined===locals.bookinstance||locals.bookinstance.status!="Loaned" ?
+                        "selected" : "" %>>Loaned</option>
+                    <option value="Reserved" <%=undefined===locals.bookinstance||locals.bookinstance.status!="Reserved"
+                        ? "selected" : "" %>>Reserved</option>
                 </select>
             </div>
         </div>
