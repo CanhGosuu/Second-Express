@@ -3,27 +3,58 @@
 
 <head>
     <% include ../../layouts/head %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/stylesheets/list.css">
 </head>
 
 <body class="container">
     <!-- header -->
     <% include ../../layouts/header %>
     <!-- main -->
-    <h1>
-        <%=title%>
-    </h1>
-    <ul>
-        <%if(locals.genre_list){ %>
-        <% for(var i=0; i<genre_list.length; i++) {%>
-        <li> <a href="<%=genre_list[i].url%>">
-                <%=genre_list[i].name%></a>
-        </li>
-        <% }} else{ %>
-        <li>There are no genre.</li>
-        <% } %>
-    </ul>
-
-
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2><b>
+                                <%=title%></b></h2>
+                    </div>
+                    <div class="col-sm-4">
+                        <a class="btn btn-info add-new" href="/catalog/genre/create" role="button"><i class="fa fa-plus"></i>
+                            Add New</a>
+                    </div>
+                </div>
+            </div>
+            <%if(locals.genre_list){ %>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <% for(var i=0; i<genre_list.length; i++) {%>
+                <tbody>
+                    <tr>
+                        <td><a href="<%=genre_list[i].url%>">
+                                <%=genre_list[i].name%></a></td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" href="<%=genre_list[i].url%>/update" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" href="<%=genre_list[i].url%>/delete" title="Delete" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <% } %>
+            </table>
+            <% } else{ %>
+            <p>There are no genre.</p>
+            <% } %>
+        </div>
+    </div>
     <!-- main -->
     </div>
     </div>
